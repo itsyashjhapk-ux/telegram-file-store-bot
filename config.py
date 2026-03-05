@@ -4,4 +4,4 @@ API_ID = 21592881
 
 API_HASH = "eba06a0d465f1d1797f0e92e97ac68ad"
 
-VERCEL_URL = "https://heavenverse.vercel.app"
+VERCEL_URL = "https://telegram-filestore-bot.vercel.app"
