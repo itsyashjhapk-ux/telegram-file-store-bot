@@ -1,23 +1,28 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from pyrogram import Client, filters
+import os
 
-BOT_TOKEN = "8240874907:AAGjzRy9fkZy-cvw9rN4Wmb25Noil4_M6Fk"
+BOT_TOKEN = os.getenv("8240874907:AAGjzRy9fkZy-cvw9rN4Wmb25Noil4_M6Fk")
+API_ID = int(os.getenv("21592881"))
+API_HASH = os.getenv("eba06a0d465f1d1797f0e92e97ac68ad")
+VERCEL_URL = os.getenv("https://heaven-verse.vercel.app")
 
-def start(update: Update, context: CallbackContext):
-    update.message.reply_text("✅ Bot is running!")
+app = Client(
+    "file-store-bot",
+    bot_token=BOT_TOKEN,
+    api_id=API_ID,
+    api_hash=API_HASH
+)
 
-def help(update: Update, context: CallbackContext):
-    update.message.reply_text("Send me a file and I will generate a link.")
+@app.on_message(filters.command("start"))
+async def start(client, message):
+    await message.reply_text("✅ Bot is running!")
 
-def main():
-    updater = Updater(BOT_TOKEN, use_context=True)
-    dp = updater.dispatcher
+@app.on_message(filters.document | filters.video | filters.photo)
+async def file_handler(client, message):
+    file_id = message.document.file_id if message.document else message.video.file_id if message.video else message.photo.file_id
+    
+    link = f"{VERCEL_URL}/access/{file_id}"
+    
+    await message.reply_text(f"🔗 Your link:\n{link}")
 
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help))
-
-    updater.start_polling()
-    updater.idle()
-
-if __name__ == "__main__":
-    main()
+app.run()
