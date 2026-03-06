@@ -4,7 +4,7 @@ import os
 BOT_TOKEN=os.getenv("8240874907:AAGjzRy9fkZy-cvw9rN4Wmb25Noil4_M6Fk")
 API_ID=int(os.getenv("21592881")) 
 API_HASH=os.getenv("eba06a0d465f1d1797f0e92e97ac68ad")
-VERCEL_URL= os.getenv("https://heaven-verse.vercel.app")
+VERCEL_URL=os.getenv("https://heaven-verse.vercel.app")
 
 app = Client(
     "file-store-bot",
